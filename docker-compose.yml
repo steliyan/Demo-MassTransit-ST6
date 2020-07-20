@@ -1,0 +1,17 @@
+version: "3.6"
+
+networks:
+  st6-demo:
+
+services:
+  rabbitmq:
+    container_name: demo-rabbitmq
+    image: rabbitmq:3-management
+    networks:
+      - st6-demo
+    ports:
+      - "5672:5672"
+      - "5673:5673"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_VHOST=test
