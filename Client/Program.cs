@@ -1,9 +1,6 @@
 ﻿using System;
-using MassTransit;
-using MassTransit.Context;
+using Infrastructure;
 using MassTransit.Util;
-using Serilog;
-using Serilog.Extensions.Logging;
 
 namespace Client
 {
@@ -11,14 +8,8 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.Console()
-                .CreateLogger();
-
-            LogContext.ConfigureCurrentLogContext(new SerilogLoggerFactory());
-
-            var bus = CreateBus();
+            LoggerFactory.SetupMassTransitLogger();
+            var bus = BusFactory.Create();
 
             try
             {
@@ -45,16 +36,6 @@ namespace Client
             {
                 TaskUtil.Await(() => bus.StopAsync());
             }
-        }
-
-        private static IBusControl CreateBus()
-        {
-            return Bus.Factory.CreateUsingRabbitMq(cfg =>
-                cfg.Host(new Uri("rabbitmq://localhost/test"), h =>
-                {
-                    h.Username("guest");
-                    h.Password("guest");
-                }));
         }
     }
 }
