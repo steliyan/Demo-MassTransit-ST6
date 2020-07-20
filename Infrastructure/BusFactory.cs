@@ -15,8 +15,7 @@ namespace Infrastructure
                 }));
         }
         
-        public static IBusControl Create<TContainerContext>(IRegistrationContext<TContainerContext> provider)
-            where TContainerContext : class
+        public static IBusControl Create(IBusRegistrationContext ctx)
         {
             return Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
@@ -26,7 +25,7 @@ namespace Infrastructure
                     h.Password("guest");
                 });
                 
-                cfg.ConfigureEndpoints(provider);
+                cfg.ConfigureEndpoints(ctx);
             });
         }
     }
