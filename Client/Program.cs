@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Contracts;
 using Infrastructure;
 using MassTransit.Util;
 
@@ -6,7 +8,7 @@ namespace Client
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             LoggerFactory.SetupMassTransitLogger();
             var bus = BusFactory.Create();
@@ -25,6 +27,8 @@ namespace Client
                         {
                             break;
                         }
+
+                        await bus.Publish<PingMessage>(new { Data = line });
                     }
                     catch (Exception ex)
                     {
