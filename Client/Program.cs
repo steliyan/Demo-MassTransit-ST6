@@ -1,6 +1,9 @@
 ﻿using System;
 using MassTransit;
+using MassTransit.Context;
 using MassTransit.Util;
+using Serilog;
+using Serilog.Extensions.Logging;
 
 namespace Client
 {
@@ -8,6 +11,13 @@ namespace Client
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            LogContext.ConfigureCurrentLogContext(new SerilogLoggerFactory());
+
             var bus = CreateBus();
 
             try
