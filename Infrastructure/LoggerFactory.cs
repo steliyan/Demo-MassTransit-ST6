@@ -10,7 +10,7 @@ namespace Infrastructure
         {
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Information()
                 .WriteTo.Console()
                 .CreateLogger();
 

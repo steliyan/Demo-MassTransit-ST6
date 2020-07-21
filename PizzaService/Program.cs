@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace PaymentService
+namespace PizzaService
 {
     class Program
     {
@@ -25,7 +25,7 @@ namespace PaymentService
                         x.AddActivities(Assembly.GetExecutingAssembly());
                     });
 
-                    services.AddSingleton<IHostedService, PaymentService>();
+                    services.AddSingleton<IHostedService, PizzaService>();
                 })
                 .ConfigureLogging((hostingContext, logging) => { logging.AddSerilog(dispose: true); });
 

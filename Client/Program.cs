@@ -28,7 +28,12 @@ namespace Client
                             break;
                         }
 
-                        await bus.Publish<PingMessage>(new { Data = line });
+                        await bus.Publish<OrderPizzaMessage>(new
+                        {
+                            Amount = 10.0m,
+                            CardNumber = "1234",
+                            Type = line,
+                        });
                     }
                     catch (Exception ex)
                     {
